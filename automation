@@ -1,13 +1,21 @@
-const puppeteer = require('puppeteer');
-const fs = require('fs');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
-(async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  
-  await page.goto('https://example.com');
-  await page.screenshot({ path: 'screenshots/example.png', fullPage: true });
-  
-  await browser.close();
-})();
+const url = 'https://www.bankofengland.co.uk/';
+
+axios.get(url)
+  .then((res) => {
+    const $ = cheerio.load(res.data);
+    const text = $('body').text();
+    const regex = /10 year.*?(\d+\.\d+)%/i;
+    const match = text.match(regex);
+
+    if (match) {
+      console.log(`UK 10Y Bond Yield: ${match[1]}%`);
+    } else {
+      console.log('10Y yield not found');
+    }
+  })
+  .catch(console.error);
+
 
