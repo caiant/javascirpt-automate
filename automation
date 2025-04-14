@@ -1,21 +1,5 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
 
-const url = 'https://www.bankofengland.co.uk/';
-
-axios.get(url)
-  .then((res) => {
-    const $ = cheerio.load(res.data);
-    const text = $('body').text();
-    const regex = /10 year.*?(\d+\.\d+)%/i;
-    const match = text.match(regex);
-
-    if (match) {
-      console.log(`UK 10Y Bond Yield: ${match[1]}%`);
-    } else {
-      console.log('10Y yield not found');
-    }
-  })
-  .catch(console.error);
-
-
+import imgkit
+ 
+# 2
+imgkit.from_url('https://www.bankofengland.co.uk/', 'BOE.png')
