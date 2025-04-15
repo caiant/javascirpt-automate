@@ -19,7 +19,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: pip install imgkit brew install wkhtmltoimage
+        run: pip install shot-scraper
 
 
       - name: Run scraper
